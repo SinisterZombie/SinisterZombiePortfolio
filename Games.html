@@ -1,15 +1,3 @@
-const express = require('express');
-const app = express();
-
-// Serve static files from 'D:/Test server'
-app.use(express.static('D:/Test server'));
-
-// Default to serving index.html if no specific route is matched
-app.get('/', (req, res) => {
-    res.sendFile('D:/Test server/index2.html');
-});
-
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="ie8" ng-app="robloxApp"><![endif]-->
 <!--[if gt IE 8]><!-->
