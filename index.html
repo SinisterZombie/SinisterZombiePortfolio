@@ -197,24 +197,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-
-    /* Mute Button Styles */
-    #mute-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #444;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 1002;
-      transition: background 0.3s ease;
-    }
-    #mute-toggle:hover {
-      background: #666;
-    }
   </style>
 </head>
 <body>
@@ -225,15 +207,6 @@
       Your browser does not support the video tag.
     </video>
   </div>
-
-  <!-- Background Music -->
-  <audio id="bg-music" loop autoplay>
-    <source src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/RAGDOLL%20UNIVERSE%20OST_%20Witches%20Groove%20(Halloween%202020%20Lobby%20Music)%20%5B%20ezmp3.cc%20%5D.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-  </audio>
-  
-  <!-- Mute Button -->
-  <button id="mute-toggle">Mute</button>
 
   <div class="container">
     <!-- About Section -->
@@ -323,7 +296,7 @@
         </div>
       </div>
 
-      <!-- Music Category -->
+      <!-- Music Category (Portfolio only) -->
       <div class="project-category" id="music">
         <h3>Music</h3>
         <p class="description">
@@ -382,7 +355,7 @@
     <div class="modal-caption" id="modal-caption"></div>
   </div>
 
-  <!-- JavaScript for Global Modal and Music Mute Functionality -->
+  <!-- JavaScript for Global Modal Functionality -->
   <script>
     // Modal functionality
     const modal = document.getElementById("modal");
@@ -407,29 +380,6 @@
     modal.addEventListener("click", function(e) {
       if (e.target === modal) {
         modal.style.display = "none";
-      }
-    });
-
-    // Background music mute functionality
-    const bgMusic = document.getElementById("bg-music");
-    const muteToggle = document.getElementById("mute-toggle");
-
-    // Check saved mute state in localStorage
-    if (localStorage.getItem("bgMusicMuted") === "true") {
-      bgMusic.muted = true;
-      muteToggle.textContent = "Unmute";
-    } else {
-      bgMusic.muted = false;
-      muteToggle.textContent = "Mute";
-    }
-
-    muteToggle.addEventListener("click", function() {
-      bgMusic.muted = !bgMusic.muted;
-      localStorage.setItem("bgMusicMuted", bgMusic.muted);
-      muteToggle.textContent = bgMusic.muted ? "Unmute" : "Mute";
-      // If unmuted, ensure playback
-      if (!bgMusic.muted) {
-        bgMusic.play();
       }
     });
   </script>
