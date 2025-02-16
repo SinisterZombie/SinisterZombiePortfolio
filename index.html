@@ -1,1 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sinister_Zombie - Portfolio</title>
+  <link rel="icon" href="https://yt3.ggpht.com/v_twj8iszyW8u-oLC0u7ozv3QDFKwbi_y0wgwyoDt4d1BOuyozLXYhwhGPymtkMOrs0ohDAC34k=s108-c-k-c0x00ffffff-no-rj" type="image/x-icon">
+  <!-- Google Font for a nostalgic vibe -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    /* Topbar with Video Loop */
+    .topbar {
+      position: relative;
+      width: 100%;
+      height: 400px; /* Adjust height as needed */
+      overflow: hidden;
+    }
+    .topbar video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Body & Background */
+    body {
+      font-family: 'Roboto Condensed', sans-serif;
+      line-height: 1.6;
+      background-image: url('https://userstyles.org/style_screenshots/191444_after.png?r=1732953609');
+      background-repeat: repeat;
+      background-size: auto;
+      color: #333;
+      padding: 20px;
+    }
+
+    /* Main Container with Smooth Tween Transition */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 20px auto 0 auto; /* added top margin so it doesn’t overlap the topbar */
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 0.5s;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Section Styles */
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      font-size: 2em;
+      border-bottom: 2px solid #444;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    /* Project Category Styles */
+    .project-category {
+      margin-bottom: 40px;
+    }
+    .project-category h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .project-category p.description {
+      margin-bottom: 20px;
+      font-style: italic;
+      color: #555;
+    }
+
+    /* Project Images Grid */
+    .project-images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    /* Override for Game Recreate: full-width images */
+    #game-recreate .project-images-grid {
+      grid-template-columns: 1fr;
+    }
+    .project-image {
+      background: #f4f4f4;
+      padding: 10px;
+      border-radius: 5px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-image:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    .project-image img {
+      width: 100%;
+      display: block;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .caption {
+      margin-top: 10px;
+    }
+    .caption h4 {
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+    .caption h4 a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .caption p {
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    /* Music Section Styles */
+    .music-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .music-container > div {
+      flex: 1;
+    }
+    .music-container img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    .music-video iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+      border-radius: 5px;
+    }
+    @media (max-width: 768px) {
+      .music-container {
+        flex-direction: column;
+      }
+    }
+
+    /* Contact Styles */
+    .contact-info {
+      list-style: none;
+    }
+    .contact-info li {
+      margin-bottom: 10px;
+    }
+
+    /* Modal (Lightbox) Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+      text-align: center;
+    }
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+    }
+    .modal-caption {
+      margin: 15px auto;
+      color: #ccc;
+      font-size: 1em;
+      width: 80%;
+      max-width: 700px;
+    }
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Topbar with Video Loop -->
+  <div class="topbar">
+    <video autoplay muted loop playsinline>
+      <source src="https://cdn-cf-east.streamable.com/video/mp4/quutwb.mp4?Expires=1739894023686&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=VeTChw8n0RIffMTh0aj0f6QJHY2QRCqrANSfh9emeDw51JB3fmVNBljwNFl1itep7zC6ZFnUUkp4ZAp2pdlnY~dUcYiuqJC0jgezfzwe-A1j96FKsVLqpabrJ1F8gjg4fg9dvC5NR~zsD6oyo3Ufa3rAjhugwkaNbRzgZyzqqsHACjjBaB8XlP--uOOLihnN7qFs288W~t6cn20EpiNQPqBQx0Ux4TZqwcKhAZ7dfLDLDE4vcH~QJftfgWV8~pDyZM0UdY~erRjLJA8kHuA-zaPlGaTrYgrPHQ9yMcAIlLk-eg8SPDFR4iIOnKdhEMhXOpC6nfu4Q9~Wh3kPYXgLqQ__" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <div class="container">
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        Hi, I’m SinisterZombie, a Roblox developer who loves making fun and nostalgic games. I’ve been playing Roblox for over 10 years, using Roblox Studio for 7+ years, and coding in Lua for 2+ years. I also have 1 year of experience making music for games.<br><br>
+        <strong>My Projects:</strong><br>
+        <em>2016 UI</em>: A popular Roblox UI that brings back the classic 2016 Roblox version.<br>
+        <em>Old Game Remakes</em>: I’ve recreated many old Roblox games, including:<br>
+        - Pizza Factory Tycoon<br>
+        - The Horror Elevator<br>
+        - The Scary Elevator<br>
+        - Ultimate Driving<br>
+        - Rob a Bank Obby<br>
+        ...and more! These projects are all about bringing back the fun and nostalgia of classic Roblox games.
+      </p>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+      <h2>Portfolio</h2>
+      
+      <!-- Roblox 2016 UI Category -->
+      <div class="project-category" id="roblox-2016-ui">
+        <h3>Roblox 2016 UI</h3>
+        <p class="description">
+          This project is a recreation of the classic Roblox UI from 2016. It features the old features such as old UI, drop hats, and more. This project is a tribute to the old Roblox UI and the nostalgia it brings to players.
+        </p>
+        <div class="project-images-grid">
+          <div class="project-image">
+            <img src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Roblox%202016%20UI%201.png" alt="Roblox 2016 UI - Image 1" data-fullsrc="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Roblox%202016%20UI%201.png" data-caption="Roblox 2016 UI - Image 1">
+          </div>
+          <div class="project-image">
+            <img src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Roblox%202016%20UI%202.png" alt="Roblox 2016 UI - Image 2" data-fullsrc="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Roblox%202016%20UI%202.png" data-caption="Roblox 2016 UI - Image 2">
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Recreate Category -->
+      <div class="project-category" id="game-recreate">
+        <h3>Game Recreate</h3>
+        <p class="description">
+          A recreation of classic Roblox games that were popular in the past. These projects aim to bring back the old version of the game and nostalgia of old Roblox games for players to enjoy them once again.
+        </p>
+        <div class="project-images-grid">
+          <!-- Pizza Factory Tycoon -->
+          <div class="project-image">
+            <img src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20200411.png" alt="Pizza Factory Tycoon" data-fullsrc="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20200411.png" data-caption="Pizza Factory Tycoon">
+            <div class="caption">
+              <h4><a href="https://www.roblox.com/games/119293723215297" target="_blank">Pizza Factory Tycoon</a></h4>
+              <p>This is one of my most popular recreation games! This game originally create by UltraW, known for creating many tycoon game such as "Restaurant Tycoon". In this game, you get to build and manage your own pizza factory. Start by making pizzas, earning money, and growing your business. Unlock new types of pizzas as you progress and create the ultimate pizza restaurant to serve your customers.</p>
+            </div>
+          </div>
+          <!-- Ultimate Driving -->
+          <div class="project-image">
+            <img src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20202437.png" alt="Ultimate Driving" data-fullsrc="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20202437.png" data-caption="Ultimate Driving">
+            <div class="caption">
+              <h4><a href="https://www.roblox.com/games/180712419" target="_blank">Ultimate Driving</a></h4>
+              <p>This is the most complex game I’ve ever recreated! Originally made by TwentyTwoPilots, this game is all about role-playing and choosing from many jobs, like Police Officer, Firefighter, Truck Driver, Highway Worker, or even just being a regular citizen. You can earn money by driving around and use it to buy new cars. Or own a house and doing everying in this open-world driving game! </p>
+            </div>
+          </div>
+          <!-- The Horror Elevator -->
+          <div class="project-image">
+            <img src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20203109.png" alt="The Horror Elevator" data-fullsrc="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20203109.png" data-caption="The Horror Elevator">
+            <div class="caption">
+              <h4><a href="https://www.roblox.com/games/13056590519" target="_blank">The Horror Elevator</a></h4>
+              <p>This game was originally created by zMadZeus, but it was removed from Roblox due to a copyright strike. In this game, you find yourself trapped in a Horror Elevator. Each time the elevator stops at a new floor, you’ll face a terrifying ghost or killer trying to hunt you down. Your goal is to survive as long as you can while the horrors keep coming!</p>
+            </div>
+          </div>
+          <!-- Rob a Bank Obby -->
+          <div class="project-image">
+            <img src="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20203437.png" alt="Rob a Bank Obby" data-fullsrc="https://raw.githubusercontent.com/SinisterZombie/Little-Dev-Hub/refs/heads/main/Screenshot%202025-02-15%20203437.png" data-caption="Rob a Bank Obby">
+            <div class="caption">
+              <h4><a href="https://www.roblox.com/games/18766324246" target="_blank">Rob a Bank Obby</a></h4>
+              <p>This game was originally created by PlatinumFalls, a legendary obby creator everyone knows. In this game, your mission is to rob a bank and escape as fast as you can—but it’s not as easy as it sounds! Each stage is filled with tricky obstacles and puzzles (or what we call an obby). Once you successfully rob the bank, you’ll make your escape like an EPIC players!</p>
+            </div>
+          </div>
+          <!-- The Scary Elevator -->
+          <div class="project-image">
+            <img src="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20203749.png?raw=true" alt="The Scary Elevator" data-fullsrc="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20203749.png?raw=true" data-caption="The Scary Elevator">
+            <div class="caption">
+              <h4><a href="https://www.roblox.com/games/18255307762" target="_blank">The Scary Elevator</a></h4>
+              <p>This game was originally created by MrNotSoHERO. The gameplay is similar to The Horror Elevator—you survive floors filled with scares and earn points for each floor you make it through. You can then use those points to buy cool stuff. This recreation is listed last because I didn’t do as much for it; my main work was fixing and improving the scripts to make the game run smoother.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Music Category (Portfolio only) -->
+      <div class="project-category" id="music">
+        <h3>Music</h3>
+        <p class="description">
+          Besides game development, I also compose music. I’m still pretty new to it and don’t have a lot of experience, but I’ve created music for some of my games and a few other projects. I don’t do it often because I feel like some of the music I make are a bit cringe or not my best work. Still, I really enjoy making music, and you can check out some of example of my tracks in the YouTube video below!
+        </p>
+        <div class="music-container">
+          <div class="music-image">
+            <img src="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20213810.png?raw=true" alt="FL Studio Music Cover" data-fullsrc="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20213810.png?raw=true" data-caption="FL Studio Music Cover">
+          </div>
+          <div class="music-video">
+            <iframe src="https://www.youtube-nocookie.com/embed/aDXuEjMEyrQ?si=IjsooN2Ib3R6bXWP" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Topic Category -->
+      <div class="project-category" id="new-topic">
+        <h3>My backstory</h3>
+        <p class="description">
+          On January 26, 2010, I joined the world (I mean born, but it sounds cooler this way XD). Growing up in Thailand, I lived at my uncle’s house, which was also an internet cafe. When I was around 3 years old, I got to use a computer for the first time. At first, I spent most of my time watching YouTube, but then my dad introduced me to games like Ragnarok Online, Minecraft, and Plants vs. Zombies.
+          <br><br>
+          Then, in 2014, when I was 4 years old, I discovered an amazing game called Roblox on YouTube. I asked my dad to help me sign up, and I instantly fell in love with it. I even begged him to buy me Roblox shirts! A few years later, around 2016 or 2017, I found out that you could actually create games on Roblox. Before that, I thought Roblox made all the games themselves!
+          <br><br>
+          I didn’t seriously start creating games until 2021, when I was 11 years old. My friends and I wanted to build our own city in Roblox, and that’s where I learned a lot of skills. Then, in 2022, I created my first big project: a Roblox version of my school as part of a school project. That was the real start of my game development journey.
+          <br><br>
+          After that, I recreated the old Roblox UI, which became super popular. That’s when Sonicmaven, a fellow developer, reached out to me. He loved my work and offered to help make my game more popular. I accepted, and thanks to his help, my game blew up! I even earned a lot of Robux, which was a dream come true for me as a kid.
+          <br><br>
+          I’m so grateful for everything that has happened and everyone who has helped me become the developer I am today. :)
+        </p>
+        <div class="project-images-grid">
+          <div class="project-image">
+            <img src="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20221740.png?raw=true" alt="Me at 2018" data-fullsrc="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20221740.png?raw=true" data-caption="Me at 2018">
+          </div>
+          <div class="project-image">
+            <img src="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20222118.png?raw=true" alt="Me using Roblox Studio" data-fullsrc="https://github.com/SinisterZombie/Little-Dev-Hub/blob/main/Screenshot%202025-02-15%20222118.png?raw=true" data-caption="Me using Roblox Studio">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <ul class="contact-info">
+        <li>Email: <a href="mailto:techin.piyo@gmail.com">techin.piyo@gmail.com</a></li>
+        <li>Discord: sinsterzombie</li>
+        <li>Roblox account: <a href="https://www.roblox.com/users/255501809/profile" target="_blank">Sinister_Zombie</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Modal for Full Image View -->
+  <div id="modal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modal-img">
+    <div class="modal-caption" id="modal-caption"></div>
+  </div>
+
+  <!-- JavaScript for Global Modal Functionality -->
+  <script>
+    // Modal functionality
+    const modal = document.getElementById("modal");
+    const modalImg = document.getElementById("modal-img");
+    const modalCaption = document.getElementById("modal-caption");
+    const closeBtn = document.querySelector(".modal .close");
+
+    document.querySelectorAll(".container img").forEach(img => {
+      if (!img.closest(".modal") && !img.classList.contains("no-modal")) {
+        img.addEventListener("click", function(e) {
+          e.preventDefault();
+          modal.style.display = "block";
+          modalImg.src = this.getAttribute("data-fullsrc") || this.src;
+          modalCaption.textContent = this.getAttribute("data-caption") || this.alt || "";
+        });
+      }
+    });
+
+    closeBtn.addEventListener("click", function() {
+      modal.style.display = "none";
+    });
+    modal.addEventListener("click", function(e) {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
